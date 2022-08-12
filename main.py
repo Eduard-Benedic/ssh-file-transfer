@@ -1,50 +1,40 @@
 import tkinter
 from tkinter import RAISED
-from tkinter import filedialog as fd
-
+import os
 import io
-import PIL
+import time
+import pathlib
+from tkinter import filedialog as fd
 from PIL import ImageTk
 from PIL import Image
 
 from view import vButton
-from agents import encoder
+from agents import encoder, send_file
 
 window = tkinter.Tk()
 
 window.title("Cybersecurity - Encode and Transfer")
 
-window.geometry("800x600+10+20")
+window.geometry("1200x800+10+20")
 
-  # canvas = tkinter.Canvas(window, width=300, height=400)
-  # canvas.pack()
-  # print(fd)
+
+def create_file_name(file_name: str):
+  path = pathlib.Path(file_name)
+  return path.stem + '-' + str(time.time()) + path.suffix
 
 def UploadAction(event=None):
-  file_name = fd.askopenfilename()
+  full_path = fd.askopenfilename()
   file = ''
+  file_name = os.path.split(full_path)[-1]
 
 
-  if file_name.endswith('.txt'):
-    with open(file_name) as f:
-      file = f.read().encode()
-  
-  if file_name.endswith(('.png', '.jpeg', '.jpg')):
-    file = Image.open(file_name).tobytes()
-  
- 
-  encoder.encrypt(file, 'do me')
+  if full_path.endswith('.txt'):
+    with open(full_path, 'r') as f:
+      send_file(f, create_file_name(file_name))
 
- 
-  # print(file_name)
-
-
-  # img_tkinter = ImageTk.PhotoImage(img)
-  
-  # label1 = tkinter.Label(image=img_tkinter)
-  # label1.image = img_tkinter
-
-  # label1.place(x=200, y=100)
+  elif full_path.endswith(('.png', '.jpeg', '.jpg', '.JPG', '.mp3', '.mp4', '.pdf')):
+    with open(full_path,'rb') as bytes:
+      send_file(bytes, create_file_name(file_name))
 
 
 button = tkinter.Button(window, text="Upload", command=UploadAction)
