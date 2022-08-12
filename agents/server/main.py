@@ -1,3 +1,16 @@
+"""
+=========================================================
+Name        :  main.py
+Author      :  Eduard Benedic
+Description :  package that encapsulates the ssh implementation and spins up a server on top of the
+               TCP/IP protocol. It has the main role of opening a socket and creating the SSH connection
+               on top of it.
+Sources     :
+              {1} - https://docs.python.org/3/howto/sockets.html
+              {2} - https://pythontic.com/modules/socket/accept
+=========================================================
+"""
+
 from binascii import hexlify
 import socket
 import sys
@@ -21,17 +34,17 @@ print("Read key: " + u(hexlify(host_key.get_fingerprint())))
 
 
 try:
+    # open a socket and set the protocol to TCP/IP {1}
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     sock.bind(("", 2200))
 except Exception as e:
-    print("*** Socket bind failed. Please try another port: " + str(e))
+    print("*** Socket bind failed. Choose another port: " + str(e))
     traceback.print_exc()
     sys.exit(1)
 
 sock.listen(100)
 print("Listening for connection ...")
-
 
 def spinServer():
     try:
@@ -51,19 +64,6 @@ def spinServer():
         except paramiko.SSHException:
             print("*** SSH negotiation failed.")
             sys.exit(1)
-        # while True:
-            # wait for auth
-            # chan = t.accept(20)
-            # if chan is None:
-            #     print("*** No channel.")
-            #     sys.exit(1)
-            # print("Authenticated!")
-
-            # server.event.wait(10)
-            # if not server.event.is_set():
-            #     print("*** Client never asked for a shell.")
-            #     sys.exit(1)
-            # chan.close()
 
     except Exception as e:
         print("*** Caught exception: " + str(e.__class__) + ": " + str(e))
@@ -75,6 +75,7 @@ def spinServer():
         sys.exit(1)
 
 while True:
+    # accept connections on the initialized socket {2}
     client, addr = sock.accept()
     try:
         spinServer()

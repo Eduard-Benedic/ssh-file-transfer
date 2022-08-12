@@ -1,8 +1,3 @@
-import socket
-from paramiko import SSHClient, AutoAddPolicy
-import signal
-signal.signal(signal.SIGINT, signal.SIG_DFL)
-
 """
 =========================================================
 Name        :  client.py
@@ -13,10 +8,14 @@ Sources     :
               {2} - https://stackoverflow.com/questions/3878082/python-paramiko
 =========================================================
 """
-def send_file(file: bytes, file_extension: str):
-  # create SSHClient {1}, a wrapper arround the Transport, Channel and SFTP client
-  client = SSHClient()
+from paramiko import SSHClient, AutoAddPolicy
+import signal
+signal.signal(signal.SIGINT, signal.SIG_DFL)
 
+# create SSHClient {1}, a wrapper arround the Transport, Channel and SFTP client
+client = SSHClient()
+
+def send_file(file: bytes, file_extension: str):
   # if the client doesn't recognize the server, initialize the connection anyway {2}
   client.set_missing_host_key_policy(AutoAddPolicy())
 

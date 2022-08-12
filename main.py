@@ -37,22 +37,6 @@ def UploadAction(event=None):
       send_file(bytes, create_file_name(file_name))
 
 
-  
-  # encoder.encrypt(file, 'do me')
-
-
- 
-  # print(file_name)
-
-
-  # img_tkinter = ImageTk.PhotoImage(img)
-  
-  # label1 = tkinter.Label(image=img_tkinter)
-  # label1.image = img_tkinter
-
-  # label1.place(x=200, y=100)
-
-
 button = tkinter.Button(window, text="Upload", command=UploadAction)
 button.pack()
 

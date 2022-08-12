@@ -1,6 +1,17 @@
+"""
+=========================================================
+Name        :  sftp.py
+Author      :  Eduard Benedic
+Description :  SFTP implementation, code was taken from the source listed below
+Sources     :
+              {1} - https://github.com/jbouse-debian/paramiko/blob/master/paramiko/sftp_client.py
+=========================================================
+"""
+
 import os
 from paramiko import SFTPServerInterface, SFTPServer, SFTPAttributes, \
     SFTPHandle, SFTP_OK
+
 
 class StubSFTPHandle (SFTPHandle):
     def stat(self):

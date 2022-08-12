@@ -1,3 +1,13 @@
+"""
+=========================================================
+Name        :  serverinterface.py
+Author      :  Eduard Benedic
+Description :  implement the server interface.
+Sources     :
+              {1} - https://docs.paramiko.org/en/stable/api/server.html
+=========================================================
+"""
+
 from binascii import hexlify
 import threading
 import paramiko
@@ -5,6 +15,9 @@ from paramiko.py3compat import b, u, decodebytes
 from paramiko import AUTH_SUCCESSFUL, \
     AUTH_FAILED, OPEN_SUCCEEDED
 
+"""
+Class that wraps around the primary thread of paramiko. {1}
+"""
 class Server(paramiko.ServerInterface):
     # 'data' is the output of base64.b64encode(key)
     # (using the "user_rsa_key" files)
