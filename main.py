@@ -17,10 +17,6 @@ window.title("Cybersecurity - Encode and Transfer")
 
 window.geometry("1200x800+10+20")
 
-  # canvas = tkinter.Canvas(window, width=300, height=400)
-  # canvas.pack()
-  # print(fd)
-
 
 def create_file_name(file_name: str):
   path = pathlib.Path(file_name)
@@ -44,7 +40,6 @@ def UploadAction(event=None):
   
   # encoder.encrypt(file, 'do me')
 
-  
 
  
   # print(file_name)
