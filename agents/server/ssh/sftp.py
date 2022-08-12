@@ -1,6 +1,6 @@
 import os
-from paramiko import ServerInterface, SFTPServerInterface, SFTPServer, SFTPAttributes, \
-    SFTPHandle, SFTP_OK, AUTH_SUCCESSFUL, OPEN_SUCCEEDED
+from paramiko import SFTPServerInterface, SFTPServer, SFTPAttributes, \
+    SFTPHandle, SFTP_OK
 
 class StubSFTPHandle (SFTPHandle):
     def stat(self):
