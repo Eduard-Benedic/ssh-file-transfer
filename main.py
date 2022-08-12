@@ -31,18 +31,16 @@ def UploadAction(event=None):
   file = ''
   file_name = os.path.split(full_path)[-1]
 
+
   if full_path.endswith('.txt'):
     with open(full_path, 'r') as f:
-      send_file(f,'files/' +  create_file_name(file_name))
-  
-  if full_path.endswith(('.png', '.jpeg', '.jpg', '.JPG')):
-    # print(img.format)
-    with open(full_path,'rb') as img:
-      send_file(img,'files/' +  create_file_name(file_name))
+      send_file(f, create_file_name(file_name))
 
-  if full_path.endswith(('.mp3', '.mp4')):
-     with open(full_path,'rb') as audio:
-      send_file(audio, 'files/' + create_file_name(file_name))
+  elif full_path.endswith(('.png', '.jpeg', '.jpg', '.JPG', '.mp3', '.mp4', '.pdf')):
+    with open(full_path,'rb') as bytes:
+      send_file(bytes, create_file_name(file_name))
+
+
   
   # encoder.encrypt(file, 'do me')
 
