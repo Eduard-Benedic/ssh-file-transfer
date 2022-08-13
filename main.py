@@ -1,16 +1,20 @@
-import tkinter
+"""
+=========================================================
+Name        :  main.py
+Author      :  Eduard Benedic
+Description :  GUI rendering
+Sources     :
+              {1} - https://www.pythontutorial.net/tkinter/tkinter-hello-world/
+=========================================================
+"""
+from ctypes import windll
 from tkinter import RAISED
+from view import root
 
 
-# Import gui elements elements
-from view import vButton
-
-window = tkinter.Tk()
-
-window.title("Cybersecurity - Encode and Transfer")
-
-window.geometry("1200x800+10+20")
-
-vButton.renderButton(window)
-
-window.mainloop()
+# Fix the blur UI on Windows {1}
+try:
+    from ctypes import windll
+    windll.shcore.SetProcessDpiAwareness(1)
+finally:
+    root.mainloop()
