@@ -1,3 +1,12 @@
+"""
+=========================================================
+Name        :  main.py
+Author      :  Eduard Benedic
+Description :  util functions
+Sources     :
+=========================================================
+"""
+
 import time
 import pathlib
 

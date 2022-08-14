@@ -161,3 +161,4 @@ cython_debug/
 agents/keys
 agents/files
 agents/*/keys
+sample/*

@@ -14,24 +14,16 @@ Sources     :
 from binascii import hexlify
 import socket
 import sys
-import threading
 import traceback
 import signal
 import paramiko
-from paramiko.py3compat import b, u, decodebytes
-import os
-from ssh import StubSFTPServer, StubSFTPHandle
+from paramiko.py3compat import u
+from ssh import StubSFTPServer
 from ssh import Server
-
 
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 # setup logging
 paramiko.util.log_to_file("demo_server.log")
-
-host_key = paramiko.RSAKey(filename="keys/server")
-
-print("Read key: " + u(hexlify(host_key.get_fingerprint())))
-
 
 try:
     # open a socket and set the protocol to TCP/IP {1}
@@ -46,21 +38,28 @@ except Exception as e:
 sock.listen(100)
 print("Listening for connection ...")
 
+host_key = paramiko.RSAKey(filename="keys/server")
+print("Read key: " + u(hexlify(host_key.get_fingerprint())))
+
 def spinServer():
     try:
-        t = paramiko.Transport(client)
-        t.set_gss_host(socket.getfqdn(""))
+        transport = paramiko.Transport(client)
+        transport.set_gss_host(socket.getfqdn(""))
         try:
-            t.load_server_moduli()
+            transport.load_server_moduli()
         except:
             print("(Failed to load moduli -- gex will be unsupported.)")
             raise
-        t.add_server_key(host_key)
-        t.set_subsystem_handler('sftp', paramiko.SFTPServer, StubSFTPServer)
+        transport.add_server_key(host_key)
+        transport.set_subsystem_handler(
+            'sftp',
+            paramiko.SFTPServer,
+            StubSFTPServer
+        )
         server = Server()
 
         try:
-            t.start_server(server=server)
+            transport.start_server(server=server)
         except paramiko.SSHException:
             print("*** SSH negotiation failed.")
             sys.exit(1)
@@ -69,7 +68,7 @@ def spinServer():
         print("*** Caught exception: " + str(e.__class__) + ": " + str(e))
         traceback.print_exc()
         try:
-            t.close()
+            transport.close()
         except:
             pass
         sys.exit(1)
@@ -83,5 +82,3 @@ while True:
         sys.exit(0)
     except Exception as exc:
         print
-
-   

@@ -1,3 +1,13 @@
+"""
+=========================================================
+Name        :  elements.py
+Author      :  Eduard Benedic
+Description :  contains all the graphical elements and the Artist class
+Sources     :
+              {1} - https://www.geeksforgeeks.org/understanding-file-sizes-bytes-kb-mb-gb-tb-pb-eb-zb-yb/
+=========================================================
+"""
+
 import tkinter
 from tkinter import Button
 from tkinter import filedialog as fd
@@ -19,6 +29,9 @@ buttonStyles = {
   'padx': 20
 }
 
+"""
+  Class used to draw on the window.
+"""
 class Artist:
   def __init__(self, root):
     self.root = root
@@ -33,10 +46,12 @@ class Artist:
     )
     title.pack()
 
+  # draws the button on the window
   def draw_button(self, text, command):
     uploadButton = Button(master=self.root, text=text, command=command, **buttonStyles)
     uploadButton.pack()
 
+  # sets properties on the window
   def _configure_window(self):
     screen_width = self.root.winfo_screenwidth()
     screen_height = self.root.winfo_screenheight()
@@ -49,5 +64,5 @@ class Artist:
 root = tkinter.Tk()
 
 artist = Artist(root)
-artist.draw_button('Upload', uploadAction)
 artist.draw_title('File transfer over secure SSH connection')
+artist.draw_button('Upload', uploadAction)

@@ -38,13 +38,19 @@ class Server(paramiko.ServerInterface):
         return paramiko.OPEN_FAILED_ADMINISTRATIVELY_PROHIBITED
 
     def check_auth_password(self, username, password):
-        if (username == "robey") and (password == "foo"):
+        if (username == "test") and (password == "test"):
             return paramiko.AUTH_SUCCESSFUL
         return AUTH_FAILED
 
     def check_auth_publickey(self, username, key):
-        print("Auth attempt with key: " + u(hexlify(key.get_fingerprint())))
-        if (username == "robey") and (key == self.good_pub_key):
+        print(
+            "Auth attempt with key: " + u(
+                hexlify(
+                    key.get_fingerprint()
+                )
+            )
+        )
+        if (username == "test") and (key == self.good_pub_key):
             return AUTH_SUCCESSFUL
         return AUTH_FAILED
 

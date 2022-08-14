@@ -23,8 +23,8 @@ def send_file(file: bytes, file_extension: str):
   client.connect(
     hostname='127.0.0.1',
     port=2200,
-    password="foo",
-    username="robey"
+    password="test",
+    username="test"
   )
 
   sftp = client.open_sftp()
