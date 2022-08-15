@@ -41,7 +41,7 @@ print("Listening for connection ...")
 host_key = paramiko.RSAKey(filename="keys/server")
 print("Read key: " + u(hexlify(host_key.get_fingerprint())))
 
-def spinServer():
+def spinServer(client):
     try:
         transport = paramiko.Transport(client)
         transport.set_gss_host(socket.getfqdn(""))
@@ -77,7 +77,7 @@ while True:
     # accept connections on the initialized socket {2}
     client, addr = sock.accept()
     try:
-        spinServer()
+        spinServer(client)
     except KeyboardInterrupt:
         sys.exit(0)
     except Exception as exc:
